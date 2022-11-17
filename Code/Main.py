@@ -7,3 +7,6 @@ inputArchive = open(
 logicAddresses = tuple(inputArchive.readlines())
 
 inputArchive.close()
+
+for logicAddress in logicAddresses:
+    processLogicAddress(int(logicAddress))
