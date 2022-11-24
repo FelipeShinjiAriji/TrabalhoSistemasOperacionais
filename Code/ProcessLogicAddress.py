@@ -1,5 +1,11 @@
-def processLogicAddress(logicAddress: int):
-    match logicAddress:
+def extractDataFromTxt(url: str):
+    inputArchive = open(url, mode='r')
+    data = tuple([eval(line) for line in inputArchive.readlines()])
+    inputArchive.close()
+    return data
+
+def processInputCommands(inputCommand: int):
+    match inputCommand:
         case -1:
             print('Escrever o conteúdo da TLB')
         case -2:
@@ -7,7 +13,11 @@ def processLogicAddress(logicAddress: int):
         case -3:
             print('Escrever entradas da tabela de páginas (somente páginas com bit de presença UM -> páginas carregas na memória principal).')
         case _:
-            if logicAddress < 0:
+            if inputCommand < 0:
                 print('Error')
             else:
-                print(logicAddress)
+                processLogicAddress(inputCommand)
+
+
+def processLogicAddress(logicAddress: int):
+    print(logicAddress)
