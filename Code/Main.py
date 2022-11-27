@@ -1,14 +1,10 @@
-from ProcessLogicAddress import processInputCommands, extractDataFromTxt
+from ProcessLogicAddress import processInputCommands
+from Functions import extractDataFromArchive
 
-#inputArchiveData = open('C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\BACKING_STORE.bin', mode='rb')
-#print(inputArchiveData)
-#physicalAddresses = tuple(inputArchiveData.read())
-#inputArchiveData.close()
-#print(physicalAddresses)
+virtualMemory = extractDataFromArchive('C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\BACKING_STORE.bin',
+                                       mode='rb')
 
-physicalAddresses = extractDataFromTxt('C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\addresses.txt')
-
-inputCommands = extractDataFromTxt('C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\address.txt-exemplo_')
+inputCommands = extractDataFromArchive('C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\address.txt-exemplo_')
 
 for inputCommand in inputCommands:
     processInputCommands(inputCommand)

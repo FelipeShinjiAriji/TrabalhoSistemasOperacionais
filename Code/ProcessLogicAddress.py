@@ -1,9 +1,3 @@
-def extractDataFromTxt(url: str):
-    inputArchive = open(url, mode='r')
-    data = tuple([eval(line) for line in inputArchive.readlines()])
-    inputArchive.close()
-    return data
-
 def processInputCommands(inputCommand: int):
     match inputCommand:
         case -1:
@@ -21,3 +15,4 @@ def processInputCommands(inputCommand: int):
 
 def processLogicAddress(logicAddress: int):
     print(logicAddress)
+
