@@ -1,3 +1,5 @@
+from Functions import decomposeAddress
+
 def processInputCommands(inputCommand: int):
     match inputCommand:
         case -1:
@@ -14,5 +16,5 @@ def processInputCommands(inputCommand: int):
 
 
 def processLogicAddress(logicAddress: int):
-    print(logicAddress)
+    print(decomposeAddress(logicAddress))
 
