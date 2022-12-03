@@ -1,6 +1,7 @@
 tlb = []
 pageTable = []
 
+
 def processInputCommands(inputCommand: int):
     match inputCommand:
         case -1:
@@ -16,7 +17,18 @@ def processInputCommands(inputCommand: int):
             if inputCommand < 0:
                 print('Error')
             else:
-                return processLogicAddress(inputCommand)
+                return formatOutput(inputCommand)
+
+            
+def formatOutput(logicAddress: int):
+    frameNumber = processLogicAddress(logicAddress)
+    offset = logicAddress%256
+    physicalAddress = 256*frameNumber + offset
+
+    return 'Virtual address: {VirtualAddress} Physical address: {PhysicalAddress} Value: {Value}'.format(
+        VirtualAddress=logicAddress,
+        PhysicalAddress=physicalAddress,
+        Value=0)
 
 
 def processLogicAddress(logicAddress: int):
@@ -29,9 +41,9 @@ def processLogicAddress(logicAddress: int):
             pageTable.append(pageNumber)
         frameNumber = pageTable.index(pageNumber)
         fifo([pageNumber, frameNumber], tlb, 16)
-        return pageTable.index(pageNumber) 
+        return frameNumber
 
-    
+      
 def fifo(item, table: list, tableLength: int):
     if tableLength <= len(table):
         table.pop(0)
