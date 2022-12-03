@@ -7,3 +7,9 @@ def extractDataFromArchive(url: str, mode: str = 'r'): # Extrai uma tupla de int
             data = tuple(inputArchive.read())
     inputArchive.close()
     return data
+
+
+def fifo(item, table: list, tableLength: int):
+    if tableLength <= len(table):
+        table.pop(0)
+    table.append(item)
