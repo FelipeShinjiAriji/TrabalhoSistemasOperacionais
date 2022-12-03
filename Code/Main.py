@@ -7,4 +7,5 @@ virtualMemory = extractDataFromArchive('C:\\Users\\Usuario\\Documents\\SistemasO
 inputCommands = extractDataFromArchive('C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\address.txt-exemplo_')
 
 for inputCommand in inputCommands:
-    processInputCommands(inputCommand)
+    print(processInputCommands(inputCommand))
+

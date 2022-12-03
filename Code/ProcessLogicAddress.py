@@ -1,20 +1,32 @@
-from Functions import decomposeAddress
+tlb = []
+pageTable = []
 
 def processInputCommands(inputCommand: int):
     match inputCommand:
         case -1:
-            print('Escrever o conteúdo da TLB')
+            #print('Escrever o conteúdo da TLB')
+            return pageTable
         case -2:
-            print('Escrever entradas da tabela de páginas(somente páginas com bit de presença ZERO -> páginas não carregadas na memória principal)')
+            #print('Escrever entradas da tabela de páginas(somente páginas com bit de presença ZERO -> páginas não carregadas na memória principal)')
+            return pageTable
         case -3:
-            print('Escrever entradas da tabela de páginas (somente páginas com bit de presença UM -> páginas carregas na memória principal).')
+            #print('Escrever entradas da tabela de páginas (somente páginas com bit de presença UM -> páginas carregas na memória principal).')
+            return pageTable
         case _:
             if inputCommand < 0:
                 print('Error')
             else:
-                processLogicAddress(inputCommand)
+                return processLogicAddress(inputCommand)
 
 
 def processLogicAddress(logicAddress: int):
-    print(decomposeAddress(logicAddress))
-
+    pageNumber = logicAddress//256
+    for pageFramePair in tlb:
+        if pageNumber in pageFramePair: # TLB hit
+            return pageFramePair#[1] # return frame
+    else: # TLB miss
+        if not (pageNumber in pageTable):
+            pageTable.append(pageNumber)
+        frameNumber = pageTable.index(pageNumber)
+        tlb.append([pageNumber, frameNumber])
+        return pageTable.index(pageNumber) 
