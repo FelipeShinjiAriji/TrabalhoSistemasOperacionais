@@ -7,8 +7,3 @@ def extractDataFromArchive(url: str, mode: str = 'r'): # Extrai uma tupla de int
             data = tuple(inputArchive.read())
     inputArchive.close()
     return data
-
-def decomposeAddress(address: int):
-    intPageNumber = address//256
-    intOffset = address%256
-    return (intPageNumber, intOffset)
