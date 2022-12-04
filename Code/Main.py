@@ -1,9 +1,9 @@
 import sys
 from Functions import extractDataFromArchive, relocate
 
-address = 'C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\ArquivoLivro2\\addresses.txt' # sys.argv[1]
-quadro = 128  # sys.argv[2]
-algoritimo = 'LRU'  # sys.argv[3]
+address = sys.argv[1]
+quadro = sys.argv[2]
+algoritimo = sys.argv[3]
 
 
 tlb = []
@@ -18,10 +18,18 @@ def processInputCommands(inputCommand: int):
             return tlb
         case -2:
             #print('Escrever entradas da tabela de páginas(somente páginas com bit de presença ZERO -> páginas não carregadas na memória principal)')
-            return pageTable
+            pagesOutOfPhysicalMemory = []
+            for page in pageTable:
+                if pageTable.index(page) not in physicalMemory:
+                    pagesOutOfPhysicalMemory.append(page)
+            return pagesOutOfPhysicalMemory
         case -3:
             #print('Escrever entradas da tabela de páginas (somente páginas com bit de presença UM -> páginas carregas na memória principal).')
-            return pageTable
+            pagesInPhysicalMemory = []
+            for page in pageTable:
+                if pageTable.index(page) in physicalMemory:
+                    pagesInPhysicalMemory.append(page)
+            return pagesInPhysicalMemory
         case _:
             if inputCommand < 0:
                 print('Error')
@@ -41,7 +49,7 @@ def formatOutput(logicAddress: int):
         Value=value)
 
 
-def processLogicAddress(logicAddress: int):
+def processLogicAddress(logicAddress: int):  # Return the frameNumber
     pageNumber = logicAddress//256
     for pageFramePair in tlb:
         if pageNumber == pageFramePair[0]:  # TLB hit
@@ -50,9 +58,14 @@ def processLogicAddress(logicAddress: int):
                 physicalMemory.append(pageFramePair[1])
                 tlb.remove(pageFramePair)
                 tlb.append(pageFramePair)
+                pageTable.remove(pageNumber)
+                pageTable.append(pageNumber)
             return pageFramePair[1]  # return frame
     else:  # TLB miss
         if not (pageNumber in pageTable):
+            pageTable.append(pageNumber)
+        elif algoritimo == 'LRU':
+            pageTable.remove(pageNumber)
             pageTable.append(pageNumber)
         frameNumber = pageTable.index(pageNumber)
 
@@ -62,16 +75,15 @@ def processLogicAddress(logicAddress: int):
                     physicalMemory.remove(physicalFrame)
                     physicalMemory.append(physicalFrame)
 
-        relocate(frameNumber ,physicalMemory, quadro)
+        relocate(frameNumber ,physicalMemory, int(quadro))
         relocate([pageNumber, frameNumber], tlb, 16)
         return frameNumber
 
 
 virtualMemory = extractDataFromArchive(
-    'C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\ArquivoLivro2\\BACKING_STORE.bin', mode='rb')
+    'BACKING_STORE.bin', mode='rb')
 inputCommands = extractDataFromArchive(address)
 
 
 for inputCommand in inputCommands:
     print(processInputCommands(inputCommand))
-
