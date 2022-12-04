@@ -1,5 +1,4 @@
-from Functions import fifo
-from Functions import extractDataFromArchive
+from Functions import extractDataFromArchive, fifo
 
 
 tlb = []
@@ -28,11 +27,12 @@ def formatOutput(logicAddress: int):
     frameNumber = processLogicAddress(logicAddress)
     offset = logicAddress % 256
     physicalAddress = 256*frameNumber + offset
+    value = virtualMemory[logicAddress]
 
     return 'Virtual address: {VirtualAddress} Physical address: {PhysicalAddress} Value: {Value}'.format(
         VirtualAddress=logicAddress,
         PhysicalAddress=physicalAddress,
-        Value=0)
+        Value=value)
 
 
 def processLogicAddress(logicAddress: int):
