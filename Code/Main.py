@@ -1,8 +1,9 @@
+import sys
 from Functions import extractDataFromArchive, relocate
 
-address = 'C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\ArquivoLivro2\\addresses.txt'
-quadro = 128
-algoritimo = 'FIFO'
+address = sys.argv[1]
+quadro = sys.argv[2]
+algoritimo = sys.argv[3]
 
 
 tlb = []
