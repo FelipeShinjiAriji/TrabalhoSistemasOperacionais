@@ -1,0 +1,4 @@
+Para chamar a execução do programa, no terminal entre na pasta do arquivo e execute o seguinte comando:
+	python Main.py <address> <quadro> '<algorítmo>'
+Exemplo:
+	python Main.py C:\Users\Usuario\Documents\SistemasOperacionais\Prova\Prova2\ArquivoLivro2\addresses.txt 128 'LRU'
