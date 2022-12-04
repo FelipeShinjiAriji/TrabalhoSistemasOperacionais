@@ -14,7 +14,7 @@ def extractDataFromArchive(url: str, mode: str = 'r'): # Extrai uma tupla de int
     return data
 
 
-def fifo(item, table: list, tableLength: int):
+def relocate(item, table: list, tableLength: int):
     if tableLength <= len(table):
         table.pop(0)
     table.append(item)

@@ -1,4 +1,8 @@
-from Functions import extractDataFromArchive, fifo
+from Functions import extractDataFromArchive, relocate
+
+address = 'C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\ArquivoLivro2\\addresses.txt'
+quadro = 128
+algoritimo = 'FIFO'
 
 
 tlb = []
@@ -39,19 +43,21 @@ def processLogicAddress(logicAddress: int):
     pageNumber = logicAddress//256
     for pageFramePair in tlb:
         if pageNumber == pageFramePair[0]:  # TLB hit
+            if algoritimo == 'LRU':
+                tlb.remove(pageFramePair)
+                tlb.append(pageFramePair)
             return pageFramePair[1]  # return frame
     else:  # TLB miss
         if not (pageNumber in pageTable):
             pageTable.append(pageNumber)
         frameNumber = pageTable.index(pageNumber)
-        fifo([pageNumber, frameNumber], tlb, 16)
+        relocate([pageNumber, frameNumber], tlb, 16)
         return frameNumber
 
 
 virtualMemory = extractDataFromArchive(
     'C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\ArquivoLivro2\\BACKING_STORE.bin', mode='rb')
-inputCommands = extractDataFromArchive(
-    'C:\\Users\\Usuario\\Documents\\SistemasOperacionais\\Prova\\Prova2\\ArquivoLivro2\\addresses.txt')
+inputCommands = extractDataFromArchive(address)
 
 
 for inputCommand in inputCommands:
