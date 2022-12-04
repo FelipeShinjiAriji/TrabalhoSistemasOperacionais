@@ -4,7 +4,12 @@ def extractDataFromArchive(url: str, mode: str = 'r'): # Extrai uma tupla de int
         case 'r':
             data = tuple([eval(line) for line in inputArchive.readlines()])
         case _:
-            data = tuple(inputArchive.read())
+            data = list(inputArchive.read())
+            for index in range(len(data)):
+                if data[index] > 127:
+                    data[index] = data[index] - 256
+            data = tuple(data)
+
     inputArchive.close()
     return data
 
